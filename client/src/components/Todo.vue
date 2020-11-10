@@ -3,6 +3,15 @@
     div.error-msg(v-show="error.length")
       span {{ error }}
       .button.button--state-remove(@click="clearError")
+
+    .search
+      div.search__btn
+      input.search__input(
+        placeholder='Search'
+        v-bind:value="search"
+        @input="updateSearchValue"
+      )
+
     .todo
       .todo__form
         input.todo__input(placeholder='Take a note' v-model="description" @keyup.enter="addTask")
@@ -10,7 +19,7 @@
       span.loading-txt(v-if="loadingGet") Loading...
       .todo__results(v-if="!loadingGet")
         task(
-          v-for="task in todos"
+          v-for="task in filteredTodos"
           :key="task._id"
           :task="task"
           @delete-task="deleteTask"
@@ -19,7 +28,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@vue/composition-api';
+import {
+  defineComponent, onMounted, ref, computed,
+} from '@vue/composition-api';
 import Vue from 'vue';
 
 // eslint-disable-next-line import/no-unresolved,import/extensions
@@ -32,9 +43,18 @@ export default defineComponent({
   name: 'Todo',
   setup() {
     const error = ref('');
+    const search = ref('');
     const description = ref('');
     const loadingGet = ref(false);
     const todos = ref<ITask[]>([]);
+
+    const filteredTodos = computed(() => todos.value
+      .filter((task) => task.description.toLowerCase().includes(search.value.toLowerCase())));
+
+    const updateSearchValue = (event: { target: { value: string }}) => {
+      setTimeout(() => { search.value = event.target.value; }, 500);
+    };
+
     const getTodos = async () => {
       loadingGet.value = true;
       await fetch('http://localhost:3000/api/v1/todo')
@@ -106,11 +126,14 @@ export default defineComponent({
       error,
       description,
       todos,
+      search,
       loadingGet,
       deleteTask,
       updateTask,
       addTask,
       clearError,
+      filteredTodos,
+      updateSearchValue,
     };
   },
 });
