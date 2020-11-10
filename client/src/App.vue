@@ -1,30 +1,28 @@
-<template lang="pug">
-  #app.todo-app
-    div {{ message }}
+<template lang='pug'>
+    #app.todo-app
+      to-do
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { defineComponent } from '@vue/composition-api';
+import Vue from 'vue';
+
+import Todo from './components/Todo.vue';
+
+Vue.component('to-do', Todo);
 
 export default defineComponent({
   name: 'App',
   setup() {
-    // utilise todo-bitpanda-server to get data, e.g. using fetch
-    /*
-    fetch('http://localhost:3000/api/v1/todo')
-      .then((resp) => resp.json())
-      .then((data) => console.log(data));
-    */
-
     return {
-      message: 'Todo list should be here',
+      test: 'test',
     };
   },
+  components: {},
 });
 </script>
 
-<style lang="scss">
-.todo-app {
-  text-align: center;
-}
+<style lang='scss'>
+@import '@/styles/index.scss';
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;500&display=swap");
 </style>

@@ -69,5 +69,6 @@ module.exports = {
       },
     ],
     quotes: ['error', 'single'],
+    'no-underscore-dangle':  ['error', { 'allow': ['_id'] }]
   },
 };
