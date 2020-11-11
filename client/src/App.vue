@@ -13,12 +13,6 @@ Vue.component('to-do', Todo);
 
 export default defineComponent({
   name: 'App',
-  setup() {
-    return {
-      test: 'test',
-    };
-  },
-  components: {},
 });
 </script>
 
