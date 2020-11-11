@@ -4,10 +4,6 @@
 
 Implement Todo MVC application using provided design and backend.
 
-Design: [figma link](https://www.figma.com/file/0zmN3IdInAR8aUGdrQ1w61/html%2Bcss-challenge?node-id=0%3A1)
-
-Backend: [todo-bitpanda-server](./server/README.md)
-
 Requirements:
 
 - Typescript
