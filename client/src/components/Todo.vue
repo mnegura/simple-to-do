@@ -8,7 +8,6 @@
       div.search__btn
       input.search__input(
         placeholder='Search'
-        v-bind:value="search"
         @input="updateSearchValue"
       )
 
@@ -31,6 +30,7 @@
 import {
   defineComponent, onMounted, ref, computed,
 } from '@vue/composition-api';
+import debounce from 'lodash.debounce';
 import Vue from 'vue';
 
 // eslint-disable-next-line import/no-unresolved,import/extensions
@@ -51,9 +51,9 @@ export default defineComponent({
     const filteredTodos = computed(() => todos.value
       .filter((task) => task.description.toLowerCase().includes(search.value.toLowerCase())));
 
-    const updateSearchValue = (event: { target: { value: string }}) => {
-      setTimeout(() => { search.value = event.target.value; }, 500);
-    };
+    const updateSearchValue = debounce((event: { target: { value: string }}) => {
+      search.value = event.target.value;
+    }, 500);
 
     const getTodos = async () => {
       loadingGet.value = true;
